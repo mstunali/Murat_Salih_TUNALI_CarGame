@@ -19,6 +19,9 @@ public class LevelEditorBehavior : MonoBehaviour {
     [HideInInspector] public List<Vector3> obtaclePositions = new List<Vector3>();
     public Levels levels = new Levels(){levels = new List<LevelData>()};
 
+    private string filePath = "Assets/Resources/levelsData.json";
+    // private string filePath = Application.persistentDataPath + "/levelsData.json";
+    
     public void CreateStartObject(bool isRecreate, Vector3 pos) {
         if (startObj != null)
             return;
@@ -91,9 +94,8 @@ public class LevelEditorBehavior : MonoBehaviour {
         }
 
         if (!isError) {
-            string json = JsonUtility.ToJson(levels);
-            System.IO.File.WriteAllText(Application.persistentDataPath + "/levelsData.json", json);
-            Debug.Log(json);
+            WriteLevelToFile();
+            Debug.Log("Obstacles saved");
         }
     }
 
@@ -127,17 +129,19 @@ public class LevelEditorBehavior : MonoBehaviour {
         }
 
         if (!isError) {
-            string json = JsonUtility.ToJson(levels);
-            System.IO.File.WriteAllText(Application.persistentDataPath + "/levelsData.json", json);
+            WriteLevelToFile();
             Debug.Log("Wave saved");
         }
     }
 
     public void LoadLevels() {
-        string json = System.IO.File.ReadAllText(Application.persistentDataPath + "/levelsData.json");
+        string json = System.IO.File.ReadAllText(filePath);
         levels = JsonUtility.FromJson<Levels>(json);
-        Debug.Log(levels.levels.Count);
+    }
 
+    private void WriteLevelToFile() {
+        string json = JsonUtility.ToJson(levels);
+        System.IO.File.WriteAllText(filePath, json);
     }
 
     public void OpenCurrentWave() {
@@ -164,7 +168,7 @@ public class LevelEditorBehavior : MonoBehaviour {
 
     public void DeleteSave() {
         levels.levels.Clear();
-        System.IO.File.WriteAllText(Application.persistentDataPath + "/levelsData.json", "{}");
+        System.IO.File.WriteAllText(filePath, "{}");
     }
 }
 

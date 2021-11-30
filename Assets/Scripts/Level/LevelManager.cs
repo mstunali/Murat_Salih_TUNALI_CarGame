@@ -15,13 +15,15 @@ public class LevelManager : MonoBehaviour {
     private GameObject currentStartObj;
     private GameObject currentEndObj;
     private List<GameObject> currentObstacleObjs = new List<GameObject>();
-    
+    private string filePath = "Assets/Resources/levelsData.json";
+    // private string filePath = Application.persistentDataPath + "/levelsData.json";
+
     void Awake() {
         if (instance != null) {
             DestroyImmediate(gameObject);
         } else {
             instance = this;
-            string json = System.IO.File.ReadAllText(Application.persistentDataPath + "/levelsData.json");
+            string json = System.IO.File.ReadAllText(filePath);
             levels = JsonUtility.FromJson<Levels>(json);
         }
     }

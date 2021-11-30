@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af82cc1a078c4723acde4d9a1a407ff, type: 3}
   m_Name: CarData
   m_EditorClassIdentifier: 
-  carType: 1
+  carType: 0
   greenCarSpeed: 2
   greenCarRotationAngle: 60
   blueCarSpeed: 1
